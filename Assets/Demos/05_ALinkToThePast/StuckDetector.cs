@@ -7,40 +7,44 @@ public class StuckDetector : MonoBehaviour
     public Vector3 checkOffset = new Vector3(0, 1, 0);
     public LayerMask obstacleLayers;
 
+    [Header("References")]
+    public Renderer targetRenderer; // Drag your "Visuals" child here!
+
     private TopDownController _movement;
-    private Renderer _renderer;
     private Color originalColor; 
 
     void Start()
     {
         _movement = GetComponent<TopDownController>();
-        _renderer = GetComponent<Renderer>();
         
-        // Save original color to prevent "Silver Link"
-        if (_renderer != null) 
+        // If you forgot to drag the renderer in, try to find it automatically
+        if (targetRenderer == null)
         {
-            originalColor = _renderer.material.color;
+            targetRenderer = GetComponentInChildren<Renderer>();
+        }
+
+        // Save original color from the CORRECT renderer
+        if (targetRenderer != null) 
+        {
+            originalColor = targetRenderer.material.color;
         }
         
-        // Default to checking everything if no layer is selected
         if (obstacleLayers == 0) obstacleLayers = ~0; 
     }
 
     void Update()
     {
-        // 1. Physical overlap check
         bool isStuck = Physics.CheckSphere(transform.position + checkOffset, checkRadius, obstacleLayers);
 
-        // 2. Enable/Disable movement script
         if (_movement != null)
         {
             _movement.canMove = !isStuck;
         }
 
-        // 3. Visual feedback
-        if (_renderer != null)
+        // Apply color to the CHILD'S renderer
+        if (targetRenderer != null)
         {
-            _renderer.material.color = isStuck ? Color.red : originalColor;
+            targetRenderer.material.color = isStuck ? Color.red : originalColor;
         }
     }
 
