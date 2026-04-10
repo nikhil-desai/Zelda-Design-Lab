@@ -2,59 +2,62 @@ using UnityEngine;
 
 public class CharacterSwitcher : MonoBehaviour
 {
-    public TopDownController[] characters;
-    private Color[] originalColors; 
-    private int currentIndex = 0;
+    public GameObject[] characters; 
+    private int _currentIndex = 0;
 
-    // We store a reference to the camera script so we don't have to "find" it every frame
-    private CameraFollow _cameraScript;
+    [Header("Camera Reference")]
+    public ZeldaUniversalCamera universalCam; 
 
     void Start()
     {
-        // 1. Find the CameraFollow script in the scene
-        _cameraScript = Object.FindFirstObjectByType<CameraFollow>();
-
-        // 2. Save original colors
-        originalColors = new Color[characters.Length];
+        // Initial setup: Make sure only Link #1 is the "Player"
         for (int i = 0; i < characters.Length; i++)
         {
-            if (characters[i].GetComponent<Renderer>() != null)
-                originalColors[i] = characters[i].GetComponent<Renderer>().material.color;
+            bool isFirst = (i == _currentIndex);
+            UpdateCharacterState(i, isFirst);
         }
 
-        SetTargetCharacter(0);
+        RefreshCamera();
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            currentIndex = (currentIndex + 1) % characters.Length;
-            SetTargetCharacter(currentIndex);
-            
-            if(SoundManager.Instance != null) SoundManager.Instance.PlaySwitch();
+            SwitchCharacter();
         }
     }
 
-    void SetTargetCharacter(int index)
+    void SwitchCharacter()
     {
-        for (int i = 0; i < characters.Length; i++)
-        {
-            // Toggle movement
-            characters[i].enabled = (i == index);
-            
-            // Visual Cue: Dim the inactive player
-            Renderer rend = characters[i].GetComponent<Renderer>();
-            if (rend != null)
-            {
-                rend.material.color = (i == index) ? originalColors[i] : originalColors[i] * 0.4f;
-            }
-        }
+        // 1. Current Link becomes a "Background" object
+        UpdateCharacterState(_currentIndex, false);
 
-        // 3. THE CAMERA FIX: Tell the camera to follow the NEW active character
-        if (_cameraScript != null)
+        // 2. Move to the next index
+        _currentIndex = (_currentIndex + 1) % characters.Length;
+
+        // 3. New Link becomes the "Player"
+        UpdateCharacterState(_currentIndex, true);
+
+        // 4. Force camera to re-scan the scene
+        RefreshCamera();
+    }
+
+    void UpdateCharacterState(int index, bool isActive)
+    {
+        // Toggle movement
+        characters[index].GetComponent<TopDownController>().enabled = isActive;
+        
+        // Toggle Tag: This is what the camera looks for!
+        // Make sure "Untagged" is spelled correctly (it's a default Unity tag)
+        characters[index].tag = isActive ? "Player" : "Untagged";
+    }
+
+    void RefreshCamera()
+    {
+        if (universalCam != null)
         {
-            _cameraScript.target = characters[index].transform;
+            universalCam.FindAllPlayers();
         }
     }
 }

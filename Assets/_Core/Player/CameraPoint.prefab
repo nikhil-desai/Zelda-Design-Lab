@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5572520547746440502}
-  - component: {fileID: 6414534610052019019}
   m_Layer: 0
   m_Name: CameraPoint
   m_TagString: Untagged
@@ -26,27 +25,13 @@ Transform:
   m_GameObject: {fileID: 1816338554308193045}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7422787761967738532}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6414534610052019019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1816338554308193045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 403caf053b84a43f496fe0993a4f1432, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  target: {fileID: 0}
-  smoothSpeed: 10
 --- !u!1 &2207449397648616767
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,6 +44,7 @@ GameObject:
   - component: {fileID: 6838669192159419539}
   - component: {fileID: 4628771875920536786}
   - component: {fileID: 5954694509410904216}
+  - component: {fileID: 3345088600155585484}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -184,3 +170,20 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &3345088600155585484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2207449397648616767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edc138e7c9aed4130a4d4fe5e01053c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZeldaUniversalCamera
+  playerTag: Player
+  baseOffset: {x: 0, y: 14, z: -10}
+  smoothTime: 0.08
+  autoZoomOnScale: 1
+  minZoomMultiplier: 0.35
