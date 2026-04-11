@@ -1,23 +1,34 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum InteractionType { Sword, Fire, Bomb, Any }
+// Defined globally so other scripts (Bomb, Fire, Magic) can see it
+public enum InteractionType { Sword, Fire, Bomb, Magic, Any }
 
 public class SecretReceiver : MonoBehaviour
 {
     [Header("Requirements")]
     public InteractionType requiredType = InteractionType.Bomb;
-    
-    [Header("Effects")]
-    public GameObject revealEffect; // Particles or dust
-    public UnityEvent onSecretRevealed; // Drag & Drop events in Inspector!
+
+    [Header("Audio & Visuals")]
+    [Tooltip("The iconic 'Discovery' chime.")]
+    public AudioClip secretSound;
+    public GameObject revealEffect; // Particle system prefab
+    public GameObject debrisPrefab; // Physics chunks prefab
+
+    [Header("Scene Integration")]
+    [Tooltip("Use this to trigger other objects (e.g., Door.Open(), Bridge.Extend())")]
+    public UnityEvent onSecretRevealed;
 
     private bool _isRevealed = false;
 
+    /// <summary>
+    /// Called by tools (Bombs, Torches, etc.) when they hit this object.
+    /// </summary>
     public void ReceiveInteraction(InteractionType incomingType)
     {
         if (_isRevealed) return;
 
+        // Check if the tool matches the requirement
         if (incomingType == requiredType || requiredType == InteractionType.Any)
         {
             Reveal();
@@ -27,14 +38,32 @@ public class SecretReceiver : MonoBehaviour
     private void Reveal()
     {
         _isRevealed = true;
-        Debug.Log("🎶 Secret Sound Effect Plays! 🎶");
 
-        if (revealEffect) Instantiate(revealEffect, transform.position, Quaternion.identity);
+        // 1. Play the Audio Cue
+        // PlayClipAtPoint creates a temporary object so the sound doesn't 
+        // get cut off when this GameObject is disabled.
+        if (secretSound != null)
+        {
+            AudioSource.PlayClipAtPoint(secretSound, transform.position);
+        }
 
-        // This allows us to disable the wall, open a door, or play an animation
+        // 2. Spawn Visuals
+        if (revealEffect != null)
+        {
+            Instantiate(revealEffect, transform.position, Quaternion.identity);
+        }
+
+        // 3. Spawn Debris
+        if (debrisPrefab != null)
+        {
+            Instantiate(debrisPrefab, transform.position, transform.rotation);
+        }
+
+        // 4. Invoke Global Events
         onSecretRevealed.Invoke();
-        
-        // Classic Zelda behavior: The wall just disappears
-        gameObject.SetActive(false); 
+
+        // 5. Deactivate the "Secret" container (the wall/bush)
+        // We often use SetActive(false) so the 'Hidden' object behind it is revealed.
+        gameObject.SetActive(false);
     }
 }

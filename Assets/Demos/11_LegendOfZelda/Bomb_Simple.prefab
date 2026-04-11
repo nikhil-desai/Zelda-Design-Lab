@@ -128,7 +128,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   fuseTime: 2
   explosionRadius: 3
-  explosionVisual: {fileID: 0}
+  explosionVisual: {fileID: 6902294848407097323, guid: d0d349550db354e88aac72a708891596, type: 3}
+  explosionSound: {fileID: 8300000, guid: ca16951d17e054fb489b9f57e8f44b2a, type: 3}
 --- !u!54 &6207400830202226617
 Rigidbody:
   m_ObjectHideFlags: 0
