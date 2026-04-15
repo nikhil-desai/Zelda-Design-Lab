@@ -31,7 +31,7 @@ public class EchoController : MonoBehaviour {
         // 1. LOWER THE ORIGIN: Start at 0.5 instead of 1.0
         // 2. TILT THE BEAM: Aim it slightly toward the floor (Vector3.down * 0.2f)
         Vector3 rayOrigin = transform.position + Vector3.up * 0.5f;
-        Vector3 rayDirection = (transform.forward - Vector3.up * 0.2f).normalized;
+        Vector3 rayDirection = (transform.forward - Vector3.up * 0.01f).normalized;
 
         Ray ray = new Ray(rayOrigin, rayDirection);
         

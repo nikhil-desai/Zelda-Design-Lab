@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "SecretDatabase", menuName = "Lab/Project18/SecretDatabase")]
+[CreateAssetMenu(fileName = "SecretDatabase", menuName = "Lab/Oracle/SecretDatabase")]
 public class SecretDatabase : ScriptableObject
 {
     // A simple list of strings representing unlocked secrets

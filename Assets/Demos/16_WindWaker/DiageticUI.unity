@@ -129,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9920209}
   - component: {fileID: 9920210}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: POI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 62026270}
   - component: {fileID: 62026269}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: POI (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -496,7 +496,7 @@ GameObject:
   - component: {fileID: 506836862}
   - component: {fileID: 506836861}
   - component: {fileID: 506836860}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Sign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -783,7 +783,7 @@ GameObject:
   - component: {fileID: 1580531066}
   - component: {fileID: 1580531065}
   - component: {fileID: 1580531064}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Post
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -897,7 +897,7 @@ GameObject:
   - component: {fileID: 1616137311}
   - component: {fileID: 1616137310}
   - component: {fileID: 1616137309}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Sign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1009,7 +1009,7 @@ GameObject:
   - component: {fileID: 1683240549}
   - component: {fileID: 1683240548}
   - component: {fileID: 1683240547}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Post
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1283,7 +1283,7 @@ MonoBehaviour:
   visionAngle: 90
   poiLayer:
     serializedVersion: 2
-    m_Bits: 4
+    m_Bits: 128
   headBone: {fileID: 1962638661102005438}
 --- !u!1001 &4777163665086274956
 PrefabInstance:
